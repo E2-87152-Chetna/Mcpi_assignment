@@ -1,0 +1,10 @@
+14:58:44 **** Build of configuration Debug for project led_gpio_opendrain_mode ****
+make -j12 all 
+arm-none-eabi-size  led_gpio_opendrain_mode.elf 
+   text	   data	    bss	    dec	    hex	filename
+   1216	      4	   1564	   2784	    ae0	led_gpio_opendrain_mode.elf
+Finished building: default.size.stdout
+ 
+
+14:58:45 Build Finished. 0 errors, 0 warnings. (took 390ms)
+
