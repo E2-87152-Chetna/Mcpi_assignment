@@ -18,31 +18,41 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 #include "stm32f4xx.h"
 #include "system_stm32f4xx.h"
-#include <string.h>
+#include "spi.h"
+#include "accel.h"
 #include "i2c_lcd.h"
-#include "i2c.h"
+
 
 #if !defined(__SOFT_FP__) && defined(__ARM_FP)
   #warning "FPU is not initialized, but the project is compiling for an FPU. Please initialize the FPU before use."
 #endif
 
-#include "i2c_lcd.h"
+int main(void) {
+		char str[32];
+		SystemInit();
+		LIS_Data val;
+		LIS_Init();
+		Lcd_Init();
+		while(1) {
+					if(LIS_IsDataAvail()) // check if new data avail
+					{
+						val = LIS_GetData(); // get the new data
+						// print value
+						sprintf(str, "X=%d,Y=%d,Z=%d\r\n", val.x, val.y, val.z);
+						Lcd_Puts(LCD_LINE1,str);
+					}
+					DelayMs(1000);
+				}
+		/*
+		if(ret) {
+			Lcd_Puts(LCD_LINE1, "!DESD @ SUNBEAM!");
+			sprintf(str, "X=%d, Y=%d, Z=%d\r\n", val.x, val.y, val.z);
+			Lcd_Puts(LCD_LINE2, str);
+				DelayMs(500);
 
-int main(void)
-{
-	int ret;
-	SystemInit();
-	ret = Lcd_Init();
-	if(ret) {
-		Lcd_Puts(LCD_LINE1, "Chetna sahu desd");
-		for(int i=1;i<17;i++)
-		{
-			Lcd_ShiftLeft();
-			DelayMs(500);
-		}
-	}
+	}*/
 	return 0;
 }
-
